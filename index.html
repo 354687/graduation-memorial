@@ -1,0 +1,462 @@
+       
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>毕业纪念册 | 致我们的青春</title>
+    <!-- 引入Tailwind CSS CDN，无需本地文件，适配GitHub Pages -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- 引入Font Awesome图标 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        // 配置Tailwind自定义颜色，使用苹果官网的配色
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        apple: {
+                            blue: '#0071e3',
+                            gray: {
+                                100: '#f5f5f7',
+                                200: '#e8e8ed',
+                                300: '#d2d2d7',
+                                400: '#86868b',
+                                500: '#6e6e73',
+                                600: '#424245',
+                                700: '#3a3a3c',
+                                800: '#1d1d1f',
+                            }
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'Helvetica Neue', 'Arial', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .content-auto {
+                content-visibility: auto;
+            }
+            .text-balance {
+                text-wrap: balance;
+            }
+            .fade-in {
+                opacity: 0;
+                transform: translateY(20px);
+                transition: opacity 0.8s ease, transform 0.8s ease;
+            }
+            .fade-in.visible {
+                opacity: 1;
+                transform: translateY(0);
+            }
+            .card-hover {
+                transition: transform 0.3s ease, box-shadow 0.3s ease;
+            }
+            .card-hover:hover {
+                transform: translateY(-8px);
+                box-shadow: 0 12px 24px rgba(0,0,0,0.15);
+            }
+            .photo-stack {
+                position: relative;
+                width: 100%;
+                height: 100%;
+            }
+            .photo-stack img {
+                top: 0;
+                left: 0;
+                opacity: 0;
+                transform: scale(0.95);
+            }
+            .photo-stack img:first-child {
+                opacity: 1;
+                transform: scale(1);
+                z-index: 4;
+            }
+            .photo-stack img:nth-child(2) {
+                transform: scale(0.98) translate(2%, 2%);
+                z-index: 3;
+            }
+            .photo-stack img:nth-child(3) {
+                transform: scale(0.96) translate(4%, 4%);
+                z-index: 2;
+            }
+            .photo-stack img:nth-child(4) {
+                transform: scale(0.94) translate(6%, 6%);
+                z-index: 1;
+            }
+            .photo-stack img.active {
+                opacity: 1;
+                transform: scale(1);
+                z-index: 4;
+            }
+            .photo-stack img.prev {
+                opacity: 1;
+                transform: scale(0.98) translate(2%, 2%);
+                z-index: 3;
+            }
+            .photo-stack img.next {
+                opacity: 0;
+                transform: scale(0.95);
+                z-index: 2;
+            }
+        }
+    </style>
+</head>
+<body class="font-sans bg-white text-apple-gray-800 overflow-x-hidden">
+    <!-- 导航栏，仿苹果官网的固定导航，滚动变色 -->
+    <nav id="navbar" class="fixed top-0 left-0 w-full z-50 transition-all duration-300 py-4 px-6 md:px-12">
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+            <a href="#" class="text-xl font-semibold transition-colors duration-300" id="nav-logo">毕业纪念</a>
+            <div class="hidden md:flex space-x-8">
+                <a href="#memories" class="transition-colors duration-300 hover:text-apple-blue">回忆相册</a>
+                <a href="#videos" class="transition-colors duration-300 hover:text-apple-blue">时光影像</a>
+                <a href="#audios" class="transition-colors duration-300 hover:text-apple-blue">青春声音</a>
+                <a href="#message" class="transition-colors duration-300 hover:text-apple-blue">毕业寄语</a>
+            </div>
+            <button class="md:hidden text-2xl" id="menu-btn">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+        <!-- 移动端菜单 -->
+        <div id="mobile-menu" class="hidden md:hidden absolute top-full left-0 w-full bg-white/95 backdrop-blur-md shadow-lg py-4 px-6">
+            <div class="flex flex-col space-y-4">
+                <a href="#memories" class="py-2">回忆相册</a>
+                <a href="#videos" class="py-2">时光影像</a>
+                <a href="#audios" class="py-2">青春声音</a>
+                <a href="#message" class="py-2">毕业寄语</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 首屏Hero区域，仿苹果官网的全屏大图+大字标题，支持多张图片滚动 -->
+    <section class="h-screen w-full relative flex items-center justify-center overflow-hidden">
+        <div class="absolute inset-0 z-0">
+            <div class="photo-stack h-full">
+                <img src="assets/images/毕业青春/毕业青春1.jpg" alt="毕业青春1" class="w-full h-full object-cover absolute transition-transform duration-500" loading="lazy">
+                <img src="assets/images/毕业青春/毕业青春2.jpg" alt="毕业青春2" class="w-full h-full object-cover absolute transition-transform duration-500" loading="lazy">
+                <img src="assets/images/毕业青春/毕业青春3.jpg" alt="毕业青春3" class="w-full h-full object-cover absolute transition-transform duration-500" loading="lazy">
+                <img src="assets/images/毕业青春/毕业青春4.jpg" alt="毕业青春4" class="w-full h-full object-cover absolute transition-transform duration-500" loading="lazy">
+            </div>
+            <div class="absolute inset-0 bg-black/30"></div>
+        </div>
+        <div class="relative z-10 text-center text-white px-6">
+            <h1 class="text-[clamp(2.5rem,8vw,5rem)] font-bold mb-4 tracking-tight">
+                致我们滚烫的青春
+            </h1>
+            <p class="text-[clamp(1.2rem,3vw,1.8rem)] mb-8 opacity-90 max-w-2xl mx-auto text-balance">
+                那年夏天，我们跃入人海，各有风雨灿烂
+            </p>
+            <a href="#memories" class="inline-block bg-apple-blue hover:bg-[#0077ED] text-white px-8 py-3 rounded-full text-lg font-medium transition-colors duration-300">
+                开启回忆
+            </a>
+        </div>
+        <div class="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce">
+            <i class="fas fa-chevron-down text-white text-2xl opacity-70"></i>
+        </div>
+    </section>
+
+    <!-- 回忆相册，仿飓风影视的卡片式布局，结合苹果的极简风格 -->
+    <section id="memories" class="py-24 px-6 md:px-12 bg-apple-gray-100">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-16 fade-in">
+                <h2 class="text-[clamp(2rem,5vw,3rem)] font-bold mb-4">回忆相册</h2>
+                <p class="text-apple-gray-500 text-lg max-w-2xl mx-auto">那些定格的瞬间，是我们最珍贵的纪念</p>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- 照片组1：大合影 -->
+                <div class="bg-white rounded-2xl overflow-hidden shadow-lg card-hover fade-in">
+                    <div class="relative h-64 overflow-hidden">
+                        <div class="photo-stack">
+                            <img src="assets/images/大合照/大合照1.jpg" alt="大合影1" class="w-full h-64 object-cover absolute transition-transform duration-500" loading="lazy">
+                            <img src="assets/images/大合照/大合照2.jpg" alt="大合影2" class="w-full h-64 object-cover absolute transition-transform duration-500" loading="lazy">
+                            <img src="assets/images/大合照/大合照3.jpg" alt="大合影3" class="w-full h-64 object-cover absolute transition-transform duration-500" loading="lazy">
+                            <img src="assets/images/大合照/大合照4.jpg" alt="大合影4" class="w-full h-64 object-cover absolute transition-transform duration-500" loading="lazy">
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold mb-2">大合影</h3>
+                        <p class="text-apple-gray-500">三年集体照，定格了我们的青春</p>
+                    </div>
+                </div>
+                <!-- 照片组2：最好的我们 -->
+                <div class="bg-white rounded-2xl overflow-hidden shadow-lg card-hover fade-in">
+                    <div class="relative h-64 overflow-hidden">
+                        <div class="photo-stack">
+                            <img src="assets/images/最好的我们/最好的我们1.jpg" alt="好友合影1" class="w-full h-64 object-cover absolute transition-transform duration-500" loading="lazy">
+                            <img src="assets/images/最好的我们/最好的我们3.jpg" alt="好友合影2" class="w-full h-64 object-cover absolute transition-transform duration-500" loading="lazy">
+                            <img src="assets/images/最好的我们/最好的我们4.jpg" alt="好友合影3" class="w-full h-64 object-cover absolute transition-transform duration-500" loading="lazy">
+                            <img src="assets/images/最好的我们/最好的我们5.jpg" alt="好友合影4" class="w-full h-64 object-cover absolute transition-transform duration-500" loading="lazy">
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold mb-2">最好的我们</h3>
+                        <p class="text-apple-gray-500">和挚友的毕业时刻，笑容永远灿烂</p>
+                    </div>
+                </div>
+                <!-- 照片组3：荣誉见证 -->
+                <div class="bg-white rounded-2xl overflow-hidden shadow-lg card-hover fade-in">
+                    <div class="relative h-64 overflow-hidden">
+                        <div class="photo-stack">
+                            <img src="assets/images/荣誉见证/荣誉见证1.jpg" alt="荣誉见证1" class="w-full h-64 object-cover absolute transition-transform duration-500" loading="lazy">
+                            <img src="assets/images/荣誉见证/荣誉见证2.jpg" alt="荣誉见证2" class="w-full h-64 object-cover absolute transition-transform duration-500" loading="lazy">
+                            <img src="assets/images/荣誉见证/荣誉见证3.jpg" alt="荣誉见证3" class="w-full h-64 object-cover absolute transition-transform duration-500" loading="lazy">
+                            <img src="assets/images/荣誉见证/荣誉见证4.jpg" alt="荣誉见证4" class="w-full h-64 object-cover absolute transition-transform duration-500" loading="lazy">
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold mb-2">荣誉见证</h3>
+                        <p class="text-apple-gray-500">那些一起奋斗、夺冠的日子</p>
+                    </div>
+                </div>
+                <!-- 照片组4：团建活动 -->
+                <div class="bg-white rounded-2xl overflow-hidden shadow-lg card-hover fade-in">
+                    <div class="relative h-64 overflow-hidden">
+                        <div class="photo-stack">
+                            <img src="assets/images/团建活动/团建活动1.jpg" alt="团建活动1" class="w-full h-64 object-cover absolute transition-transform duration-500" loading="lazy">
+                            <img src="assets/images/团建活动/团建活动2.jpg" alt="团建活动2" class="w-full h-64 object-cover absolute transition-transform duration-500" loading="lazy">
+                            <img src="assets/images/团建活动/团建活动3.jpg" alt="团建活动3" class="w-full h-64 object-cover absolute transition-transform duration-500" loading="lazy">
+                            <img src="assets/images/团建活动/团建活动4.jpg" alt="团建活动4" class="w-full h-64 object-cover absolute transition-transform duration-500" loading="lazy">
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold mb-2">团建活动</h3>
+                        <p class="text-apple-gray-500">团结的见证，友谊的重叠</p>
+                    </div>
+                </div>
+                <!-- 照片组5：日常点滴 -->
+                <div class="bg-white rounded-2xl overflow-hidden shadow-lg card-hover fade-in">
+                    <div class="relative h-64 overflow-hidden">
+                        <div class="photo-stack">
+                            <img src="assets/images/日常点滴/日常点滴1.jpg" class="w-full h-64 object-cover absolute transition-transform duration-500" loading="lazy">
+                            <img src="assets/images/日常点滴/日常点滴2.jpg" alt="日常点滴2" class="w-full h-64 object-cover absolute transition-transform duration-500" loading="lazy">
+                            <img src="assets/images/日常点滴/日常点滴3.jpg" alt="日常点滴3" class="w-full h-64 object-cover absolute transition-transform duration-500" loading="lazy">
+                            <img src="assets/images/日常点滴/日常点滴4.jpg" alt="日常点滴4" class="w-full h-64 object-cover absolute transition-transform duration-500" loading="lazy">
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold mb-2">日常点滴</h3>
+                        <p class="text-apple-gray-500">实验室的日常，我们的青春</p>
+                    </div>
+                </div>
+                <!-- 照片组6：校园角落 -->
+                <div class="bg-white rounded-2xl overflow-hidden shadow-lg card-hover fade-in">
+                    <div class="relative h-64 overflow-hidden">
+                        <div class="photo-stack">
+                            <img src="assets/images/校园角落/校园角落1.jpg" alt="校园角落1" class="w-full h-64 object-cover absolute transition-transform duration-500" loading="lazy">
+                            <img src="assets/images/校园角落/校园角落2.jpg" alt="校园角落2" class="w-full h-64 object-cover absolute transition-transform duration-500" loading="lazy">
+                            <img src="assets/images/校园角落/校园角落3.jpg" alt="校园角落3" class="w-full h-64 object-cover absolute transition-transform duration-500" loading="lazy">
+                            <img src="assets/images/校园角落/校园角落4.jpg" alt="校园角落4" class="w-full h-64 object-cover absolute transition-transform duration-500" loading="lazy">
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold mb-2">校园角落</h3>
+                        <p class="text-apple-gray-500">走在青春的长廊，我们时常怀念</p>
+                    </div>
+                </div>
+            </div>
+            <p class="text-center text-apple-gray-400 mt-8 text-sm">
+            </p>
+        </div>
+    </section>
+
+    <!-- 时光影像，视频模块，仿影视网站的视频展示 -->
+    <section id="videos" class="py-24 px-6 md:px-12">
+        <div class="max-w-5xl mx-auto">
+            <div class="text-center mb-16 fade-in">
+                <h2 class="text-[clamp(2rem,5vw,3rem)] font-bold mb-4">时光影像</h2>
+                <p class="text-apple-gray-500 text-lg max-w-2xl mx-auto">动态的回忆，记录我们一起走过的日子</p>
+            </div>
+            <div class="bg-apple-gray-100 rounded-3xl overflow-hidden shadow-xl fade-in">
+                <div class="aspect-video w-full relative">
+                    <!-- 视频播放器，用户可将自己的视频文件放到assets/videos/目录下，替换src即可 -->
+                    <video 
+                        class="w-full h-full object-cover"
+                        poster="assets/images/毕业青春/毕业青春1.jpg"
+                        controls
+                        preload="metadata"
+                    >
+                        <source src="assets/videos/毕业视频.mp4" type="video/mp4">
+                        你的浏览器不支持视频播放，请更新浏览器。
+                    </video>
+                </div>
+                <div class="p-8">
+                    <h3 class="text-2xl font-semibold mb-3">我们的毕业MV</h3>
+                    <p class="text-apple-gray-500">
+                        这是属于我们的毕业纪念视频，记录了从入学到毕业的点点滴滴，每一个瞬间都值得珍藏。
+                    </p>
+                </div>
+            </div>
+            <p class="text-center text-apple-gray-400 mt-8 text-sm">
+            </p>
+        </div>
+    </section>
+
+    <!-- 青春声音，音频模块 -->
+    <section id="audios" class="py-24 px-6 md:px-12 bg-apple-gray-100">
+        <div class="max-w-4xl mx-auto">
+            <div class="text-center mb-16 fade-in">
+                <h2 class="text-[clamp(2rem,5vw,3rem)] font-bold mb-4">青春声音</h2>
+                <p class="text-apple-gray-500 text-lg max-w-2xl mx-auto">那些熟悉的声音，是我们青春的背景音</p>
+            </div>
+            <div class="bg-white rounded-3xl overflow-hidden shadow-xl p-8 fade-in">
+                <div class="flex flex-col md:flex-row items-center gap-8">
+                    <div class="w-32 h-32 rounded-2xl overflow-hidden shadow-lg flex-shrink-0">
+                        <img src="https://picsum.photos/seed/audioCover/300/300" alt="青春纪念册" class="w-full h-full object-cover" loading="lazy">
+                    </div>
+                    <div class="flex-1 w-full">
+                        <h3 class="text-2xl font-semibold mb-2">我们的声音</h3>
+                        <p class="text-apple-gray-500 mb-6">属于我们的独特记忆，每次听到都能想起那些日子</p>
+                        <!-- 音频播放器，用户可将自己的音频文件放到assets/audios/目录下 -->
+                        <audio 
+                            class="w-full"
+                            controls
+                            preload="metadata"
+                        >
+                            <source src="assets/audios/祝福音频.mp3" type="audio/mpeg">
+                            你的浏览器不支持音频播放，请更新浏览器。
+                        </audio>
+                    </div>
+                </div>
+            </div>
+            <p class="text-center text-apple-gray-400 mt-8 text-sm">
+            </p>
+        </div>
+    </section>
+
+    <!-- 毕业寄语 -->
+    <section id="message" class="py-24 px-6 md:px-12">
+        <div class="max-w-3xl mx-auto text-center fade-in">
+            <h2 class="text-[clamp(2rem,5vw,3rem)] font-bold mb-8">毕业寄语</h2>
+            <blockquote class="text-xl md:text-2xl text-apple-gray-600 leading-relaxed mb-8 italic text-balance">
+                "愿我们，在彼此看不见的岁月里，熠熠生辉。<br>
+                跃入人海，各有风雨灿烂。"
+            </blockquote>
+            <div class="w-16 h-1 bg-apple-blue mx-auto mb-8"></div>
+            <p class="text-apple-gray-500">
+                此纪念册，献给所有一起走过这段青春的我们
+            </p>
+        </div>
+    </section>
+
+    <!-- 页脚 -->
+    <footer class="py-12 px-6 md:px-12 bg-apple-gray-100 border-t border-apple-gray-200">
+        <div class="max-w-7xl mx-auto text-center text-apple-gray-500">
+            <p>毕业纪念册 &copy; 2026</p>
+        </div>
+    </footer>
+
+    <script>
+        // 导航栏滚动效果，仿苹果官网的导航栏变色
+        const navbar = document.getElementById('navbar');
+        const navLogo = document.getElementById('nav-logo');
+        const navLinks = navbar.querySelectorAll('a');
+        
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add('bg-white/95', 'backdrop-blur-md', 'shadow-sm');
+                navLogo.classList.remove('text-white');
+                navLogo.classList.add('text-apple-gray-800');
+                navLinks.forEach(link => {
+                    link.classList.remove('text-white');
+                    link.classList.add('text-apple-gray-800');
+                });
+            } else {
+                navbar.classList.remove('bg-white/95', 'backdrop-blur-md', 'shadow-sm');
+                navLogo.classList.add('text-white');
+                navLogo.classList.remove('text-apple-gray-800');
+                navLinks.forEach(link => {
+                    link.classList.add('text-white');
+                    link.classList.remove('text-apple-gray-800');
+                });
+            }
+        });
+
+        // 移动端菜单切换
+        const menuBtn = document.getElementById('menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        menuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // 平滑滚动
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                    // 关闭移动端菜单
+                    mobileMenu.classList.add('hidden');
+                }
+            });
+        });
+
+        // 滚动淡入动画，仿苹果官网的元素渐入效果
+        const fadeElements = document.querySelectorAll('.fade-in');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, {
+            threshold: 0.1
+        });
+
+        fadeElements.forEach(element => {
+            observer.observe(element);
+        });
+
+        // 初始化，首屏加载时触发一次滚动事件，设置导航栏初始状态
+        window.dispatchEvent(new Event('scroll'));
+
+        // 照片轮播功能
+        function initPhotoCarousels() {
+            const photoStacks = document.querySelectorAll('.photo-stack');
+            
+            photoStacks.forEach(stack => {
+                const images = stack.querySelectorAll('img');
+                let currentIndex = 0;
+                const totalImages = images.length;
+                
+                // 初始化第一张图片为活动状态
+                images[0].classList.add('active');
+                
+                function nextImage() {
+                    // 移除所有图片的状态类
+                    images.forEach(img => {
+                        img.classList.remove('active', 'prev', 'next');
+                    });
+                    
+                    // 计算新的索引
+                    currentIndex = (currentIndex + 1) % totalImages;
+                    const prevIndex = (currentIndex - 1 + totalImages) % totalImages;
+                    
+                    // 设置新的状态类
+                    images[currentIndex].classList.add('active');
+                    images[prevIndex].classList.add('prev');
+                    
+                    // 为其他图片添加next类
+                    images.forEach((img, index) => {
+                        if (index !== currentIndex && index !== prevIndex) {
+                            img.classList.add('next');
+                        }
+                    });
+                }
+                
+                // 每3秒切换一次图片
+                setInterval(nextImage, 3000);
+            });
+        }
+        
+        // 页面加载完成后初始化照片轮播
+        window.addEventListener('DOMContentLoaded', initPhotoCarousels);
+    </script>
+</body>
+</html>
